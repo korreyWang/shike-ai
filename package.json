@@ -1,0 +1,8 @@
+{
+  "name": "shike-ai",
+  "version": "3.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {"start": "node server.mjs", "check": "node --check server.mjs && node --check dist/app.js && node --check dist/v3.js"},
+  "engines": {"node": ">=18"}
+}
