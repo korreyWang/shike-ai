@@ -44,3 +44,16 @@ npm start
 ## 后续建议
 
 Codex Cloud 接手后，可先把 `/api/ai/chat` 接入前端 AI 助手，再增加图片输入模型、D1/Postgres 数据库、用户登录和真实订阅支付。所有密钥继续放在 Personal vault 或部署环境变量中。
+
+## 照片营养分析
+
+选择 JPEG、PNG、GIF、WebP 照片（最大 15 MB）后，前端将图片发送至
+`POST /api/ai/analyze-food`，成功后自动打开可编辑的饮食记录表单。
+食物名称、热量（kcal）、蛋白质、碳水、脂肪（g）均为整餐估算，保存前需核对。
+分析失败或未配置时仍可手动填写；不保存原始照片到服务端磁盘。
+
+服务端直接复用 `process.env.DEEPSEEK_API_KEY`，不需要额外视觉密钥。
+图片使用 base64 data URL 发送至 `https://api.deepseek.com/chat/completions`，
+模型固定为 `deepseek-flash`。需允许访问 `api.deepseek.com`。
+模型可用性及图片支持以实际 API 响应为准；调用失败不会生成模拟识别数据。
+Node 24 云环境启动命令：`NODE_USE_ENV_PROXY=1 npm start`。
